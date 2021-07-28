@@ -1,0 +1,26 @@
+{
+    "name": "daynnnnn/statamic-forward-auth",
+    "description": "Allows you to use login using forward authentication.",
+    "autoload": {
+        "psr-4": {
+            "Daynnnnn\\Statamic\\Auth\\ForwardAuth\\": "src"
+        }
+    },
+    "extra": {
+        "statamic": {
+            "name": "Statamic Forward Auth",
+            "description": "Allows you to use login using forward authentication."
+        },
+        "laravel": {
+            "providers": [
+                "Daynnnnn\\Statamic\\Auth\\ForwardAuth\\ForwardAuthServiceProvider"
+            ]
+        }
+    },
+    "require": {
+        "statamic/cms": "^3.0"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^0.12.89"
+    }
+}
