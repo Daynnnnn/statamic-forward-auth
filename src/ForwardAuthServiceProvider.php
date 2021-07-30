@@ -22,6 +22,6 @@ class ForwardAuthServiceProvider extends AddonServiceProvider
             'ldap' => AuthServices\LdapAuthService::class,
         ];
 
-        return $types[$type];
+        return $types[$type] ?? $type;
     }
 }
