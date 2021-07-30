@@ -11,11 +11,11 @@ class HttpAuthService implements AuthServiceContract
     protected $forwardAuthUser = false;
 
     public function __construct() {
-        $this->config = config('auth.providers.users.config');
+        $this->config = config('auth.providers.users');
     }
 
     public function checkCredentialsAgainstForwardAuth(array $credentials) {
-        return $this->forwardAuthUser = Http::post($this->config['address'], $credentials)->json();
+        return $this->forwardAuthUser = Http::post($this->config['config']['address'], $credentials)->json();
     }
 
     public function credentialsValidAgainstForwardAuth() {
