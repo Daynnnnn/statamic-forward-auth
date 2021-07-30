@@ -19,6 +19,7 @@ class ForwardAuthServiceProvider extends AddonServiceProvider
     protected function lookupType($type) {
         $types = [
             'http' => AuthServices\HttpAuthService::class,
+            'ldap' => AuthServices\LdapAuthService::class,
         ];
 
         return $types[$type];
