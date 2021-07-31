@@ -31,12 +31,13 @@ class ForwardAuthUserProvider extends UserProvider implements UserProviderContra
             return null;
         }
 
-        if ($this->validateCredentials($user, $credentials) && $user->forward_auth === true) {
+        if ($user->forward_auth === true) {
             $this->authService->checkCredentialsAgainstForwardAuth($credentials);
 
-            if (! $this->authService->credentialsValidAgainstForwardAuth()) {
-                $user->delete();
+            if (!$this->authService->credentialsValidAgainstForwardAuth()) {
                 return null;
+            } elseif (!$this->validateCredentials($user, $credentials)) {
+                $user->password($credentials['password'])->save();
             }
         }
 
