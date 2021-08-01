@@ -2,6 +2,10 @@
 
 Use forward authentication to login to statamic.
 
+# How it works
+
+<img width="626" alt="Screenshot 2021-07-31 at 16 15 20" src="https://user-images.githubusercontent.com/25618897/127768699-676427d7-2985-4dab-aaac-22e3fa498b8a.png">
+
 # Installation
 
 From a standard Statamic V3 site, you can run:
