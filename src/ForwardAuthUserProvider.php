@@ -27,20 +27,26 @@ class ForwardAuthUserProvider extends UserProvider implements UserProviderContra
                         ->data($this->authService->userData())
                         ->save();
             }
-
-            return null;
         }
+
+        return $user;
+    }
+
+    public function validateCredentials(Authenticatable $user, array $credentials)
+    {
+        $localCredentialsValid = Hash::check($credentials['password'], $user->getAuthPassword());
 
         if ($user->forward_auth === true) {
             $this->authService->checkCredentialsAgainstForwardAuth($credentials);
 
             if (!$this->authService->credentialsValidAgainstForwardAuth()) {
-                return null;
-            } elseif (!$this->validateCredentials($user, $credentials)) {
+                $localCredentialsValid = false;
+            } elseif (!$localCredentialsValid) {
                 $user->password($credentials['password'])->save();
+                $localCredentialsValid = true;
             }
         }
 
-        return $user;
+        return $localCredentialsValid;
     }
 }
