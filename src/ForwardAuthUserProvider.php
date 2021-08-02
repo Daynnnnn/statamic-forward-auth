@@ -3,7 +3,9 @@
 namespace Daynnnnn\Statamic\Auth\ForwardAuth;
 
 use Daynnnnn\Statamic\Auth\ForwardAuth\AuthServices\AuthServiceContract;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider as UserProviderContract;
+use Illuminate\Support\Facades\Hash;
 use Statamic\Auth\UserProvider;
 use Statamic\Facades\User;
 
