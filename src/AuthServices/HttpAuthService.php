@@ -2,8 +2,8 @@
 
 namespace Daynnnnn\Statamic\Auth\ForwardAuth\AuthServices;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
-
 
 class HttpAuthService implements AuthServiceContract
 {
@@ -19,12 +19,12 @@ class HttpAuthService implements AuthServiceContract
     }
 
     public function credentialsValidAgainstForwardAuth() {
-        return $this->forwardAuthUser['result'];
+        return Arr::get($this->forwardAuthUser, $this->config['config']['response']['success']);
     }
 
     public function userData() {
         return array_merge($this->config['data'], [
-            'name' => $this->forwardAuthUser['data']['name'],
+            'name' => Arr::get($this->forwardAuthUser, $this->config['config']['response']['name']),
             'forward_auth' => true,
         ]);
     }

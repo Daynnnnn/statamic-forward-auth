@@ -47,9 +47,31 @@ An ldap search will be made of the `base_dn` to find the user. If the user is fo
 
 `endpoint`: `(string)` Address on which login will be attempted
 
+`result`: `(array)` Where the success status and full name of the user can be found in the JSON response, example:
+
+If your JSON response looks like this:
+
+```
+{
+  "result": true,
+  "data": {
+    "name": "Daniel Pegg"
+  }
+}
+```
+
+Your result array should look like this:
+
+```
+result => [
+    'success' => 'result',
+    'name' => 'data.name',
+],
+```
+
 ### Description
 
-A POST request will be sent to the endpoint with the attributes of `email` and `password`. The expected response is JSON, with a `result` item containing true or false, and a `data.name` item containing a name for the user.
+A POST request will be sent to the endpoint with the attributes of `email` and `password`. The expected response is JSON, and should contain the success status of the credentials, and if the success status is true, the full name of a user. 
 
 # Extending
 
