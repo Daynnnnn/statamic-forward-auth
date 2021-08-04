@@ -8,11 +8,18 @@ use Statamic\Providers\AddonServiceProvider;
 
 class ForwardAuthServiceProvider extends AddonServiceProvider
 {
+    public function register()
+    {
+        $this->app->bind(AuthServices\AuthServiceContract::class, function () {
+            $class = $this->lookupType(config('auth.providers.users.type'));
+            return new $class;
+        });
+    }
+
     public function boot()
     {
         Auth::provider('forward', function () {
-            $class = $this->lookupType(config('auth.providers.users.type'));
-            return new ForwardAuthUserProvider(new $class);
+            return new ForwardAuthUserProvider;
         });
     }
 

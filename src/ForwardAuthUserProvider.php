@@ -2,7 +2,7 @@
 
 namespace Daynnnnn\Statamic\Auth\ForwardAuth;
 
-use Daynnnnn\Statamic\Auth\ForwardAuth\AuthServices\AuthServiceContract;
+use Daynnnnn\Statamic\Auth\ForwardAuth\Facades\AuthService;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider as UserProviderContract;
 use Illuminate\Support\Facades\Hash;
@@ -11,22 +11,16 @@ use Statamic\Facades\User;
 
 class ForwardAuthUserProvider extends UserProvider implements UserProviderContract
 {
-    protected $authService;
-
-    public function __construct(AuthServiceContract $authService) {
-        $this->authService = $authService;
-    }
-
     public function retrieveByCredentials(array $credentials)
     {
         if (($user = User::findByEmail($credentials['email'])) === null) {
-            $this->authService->checkCredentialsAgainstForwardAuth($credentials);
+            AuthService::checkCredentialsAgainstForwardAuth($credentials);
 
-            if ($this->authService->credentialsValidAgainstForwardAuth()) {
+            if (AuthService::credentialsValidAgainstForwardAuth()) {
                 return User::make()
                         ->email($credentials['email'])
                         ->password($credentials['password'])
-                        ->data($this->authService->userData())
+                        ->data(AuthService::userData())
                         ->save();
             }
         }
@@ -39,9 +33,9 @@ class ForwardAuthUserProvider extends UserProvider implements UserProviderContra
         $localCredentialsValid = Hash::check($credentials['password'], $user->getAuthPassword());
 
         if ($user->forward_auth === true) {
-            $this->authService->checkCredentialsAgainstForwardAuth($credentials);
+            AuthService::checkCredentialsAgainstForwardAuth($credentials);
 
-            if (!$this->authService->credentialsValidAgainstForwardAuth()) {
+            if (!AuthService::credentialsValidAgainstForwardAuth()) {
                 $localCredentialsValid = false;
             } elseif (!$localCredentialsValid) {
                 $user->password($credentials['password'])->save();
