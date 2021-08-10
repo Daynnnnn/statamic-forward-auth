@@ -19,8 +19,15 @@ class TestCase extends BaseTestCase
     {
         parent::setUp();
 
+        $time = time();
+
+        config(['filesystems.disks.standard' => [
+            'driver' => 'local',
+            'root' => storage_path('app/'.$time),
+        ]]);
+
         app()->alias(Stache::class, 'stache');
-        app()['stache'] = app()['stache']->getFacadeRoot()->registerStore((new UsersStore)->directory(storage_path('app/'.time().'/daynnnnn')));
+        app()['stache'] = app()['stache']->getFacadeRoot()->registerStore((new UsersStore)->directory(storage_path('app/'.$time.'/users')));
     
         app()->singleton('stache.indexes', function () {
             return collect();
