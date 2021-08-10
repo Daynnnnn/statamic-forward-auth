@@ -1,38 +1,5 @@
 <?php
 
-use Daynnnnn\Statamic\Auth\ForwardAuth\AuthServices\HttpAuthService;
-use Illuminate\Support\Facades\Http;
-
-function setupHttpAuthService() {
-    $mockRepsonse = [
-        'success' => true,
-        'data' => [
-            'name' => 'Test Name',
-        ],
-    ];
-
-    $config = [
-        'driver' => 'forward',
-        'type' => 'http',
-        'config' => [
-            'address' => 'http://localhost/login',
-            'response' => [
-                'success' => 'success',
-                'name' => 'data.name',
-            ],
-        ],
-        'data' => [
-            'super' => true,
-        ],
-    ];
-    
-    config(['auth.providers.users' => $config]);
-
-    Http::fake(Http::response($mockRepsonse, 200));
-
-    return new HttpAuthService;
-}
-
 test('checkCredentialsAgainstForwardAuth returns expected array', function () {
     $mockRepsonse = [
         'success' => true,
@@ -46,7 +13,7 @@ test('checkCredentialsAgainstForwardAuth returns expected array', function () {
         'password' => 'supersecure',
     ];
 
-    $forwardAuthUser = setupHttpAuthService();
+    $forwardAuthUser = setupHttpAuthService(true);
 
     $this->assertEquals($mockRepsonse, $forwardAuthUser->checkCredentialsAgainstForwardAuth($credentials));
 });
@@ -57,7 +24,7 @@ test('credentialsValidAgainstForwardAuth returns true with valid user', function
         'password' => 'supersecure',
     ];
 
-    $forwardAuthUser = tap(setupHttpAuthService())->checkCredentialsAgainstForwardAuth($credentials);
+    $forwardAuthUser = tap(setupHttpAuthService(true))->checkCredentialsAgainstForwardAuth($credentials);
 
     $this->assertTrue($forwardAuthUser->credentialsValidAgainstForwardAuth());
 });
@@ -74,7 +41,7 @@ test('userData returns expected data array', function() {
         'password' => 'supersecure',
     ];
 
-    $forwardAuthUser = tap(setupHttpAuthService())->checkCredentialsAgainstForwardAuth($credentials);
+    $forwardAuthUser = tap(setupHttpAuthService(true))->checkCredentialsAgainstForwardAuth($credentials);
 
     $this->assertEquals($expectedData, $forwardAuthUser->userData());
 });

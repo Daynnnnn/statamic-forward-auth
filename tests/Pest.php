@@ -1,5 +1,8 @@
 <?php
 
+use Daynnnnn\Statamic\Auth\ForwardAuth\AuthServices\HttpAuthService;
+use Illuminate\Support\Facades\Http;
+
 /*
 |--------------------------------------------------------------------------
 | Test Case
@@ -11,7 +14,7 @@
 |
 */
 
-uses(\Orchestra\Testbench\TestCase::class)->in('Feature');
+uses(\Daynnnnn\Statamic\Auth\ForwardAuth\Tests\TestCase::class)->in('Feature');
 
 /*
 |--------------------------------------------------------------------------
@@ -39,7 +42,32 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
-{
-    // ..
+function setupHttpAuthService($status) {
+    $mockRepsonse = [
+        'success' => $status,
+        'data' => [
+            'name' => 'Test Name',
+        ],
+    ];
+
+    $config = [
+        'driver' => 'forward',
+        'type' => 'http',
+        'config' => [
+            'address' => 'http://localhost/login',
+            'response' => [
+                'success' => 'success',
+                'name' => 'data.name',
+            ],
+        ],
+        'data' => [
+            'super' => true,
+        ],
+    ];
+    
+    config(['auth.providers.users' => $config]);
+
+    Http::fake(Http::response($mockRepsonse, 200));
+
+    return new HttpAuthService;
 }
