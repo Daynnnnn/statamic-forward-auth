@@ -5,23 +5,25 @@ namespace Daynnnnn\Statamic\Auth\ForwardAuth\AuthServices;
 class LdapAuthService implements AuthServiceContract
 {
     protected $config;
+    protected $data;
     protected $forwardAuthUser = false;
 
     public function __construct() {
-        $this->config = config('auth.providers.users');
+        $this->config = config("forward-authentication.services.ldap");
+        $this->data = config("forward-authentication.data");
     }
 
     public function checkCredentialsAgainstForwardAuth(array $credentials) {
-        $ldapServer   = $this->config['config']['host'];
-        $bindUser     = $this->config['config']['username'];
-        $bindPassword = $this->config['config']['password'];
-        $baseDn       = $this->config['config']['base_dn'];
+        $ldapServer   = $this->config['host'];
+        $bindUser     = $this->config['username'];
+        $bindPassword = $this->config['password'];
+        $baseDn       = $this->config['base_dn'];
 
         $bindDN = 'uid=' . $bindUser . ',' . $baseDn;
 
         $ldapConnection = ldap_connect($ldapServer);
 
-        if ($this->config['config']['ssl']) {
+        if ($this->config['ssl']) {
             ldap_set_option($ldapConnection, LDAP_OPT_PROTOCOL_VERSION, 3);
         }
         
@@ -49,7 +51,7 @@ class LdapAuthService implements AuthServiceContract
     }
 
     public function userData() {
-        return array_merge($this->config['data'], [
+        return array_merge($this->data, [
             'name' => $this->forwardAuthUser['cn'][0],
             'forward_auth' => true,
         ]);

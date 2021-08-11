@@ -50,22 +50,28 @@ function setupHttpAuthService($status) {
         ],
     ];
 
-    $config = [
-        'driver' => 'forward',
+    $forwardAuthConfig = [
         'type' => 'http',
-        'config' => [
-            'address' => 'http://localhost/login',
-            'response' => [
-                'success' => 'success',
-                'name' => 'data.name',
-            ],
+        'services' => [
+            'http' => [
+                'address' => 'http://localhost/login',
+                'response' => [
+                    'success' => 'success',
+                    'name' => 'data.name',
+                ],
+            ]
         ],
         'data' => [
             'super' => true,
         ],
     ];
+
+    $authConfig = [
+        'driver' => 'forward',
+    ];
     
-    config(['auth.providers.users' => $config]);
+    config(['forward-authentication' => $forwardAuthConfig]);
+    config(['auth.providers.users' => $authConfig]);
 
     Http::fake(Http::response($mockRepsonse, 200));
 
