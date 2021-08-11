@@ -9,9 +9,9 @@ class LdapAuthService implements AuthServiceContract
     protected $forwardAuthUser = false;
 
     public function __construct() {
-        $service = config('forward-authentication.default');
-        $this->config = config("forward-authentication.services.$service");
-        $this->data = config("forward-authentication.data");
+        $service = config('statamic.forward-authentication.default');
+        $this->config = config("statamic.forward-authentication.services.$service");
+        $this->data = config("statamic.forward-authentication.data");
     }
 
     public function checkCredentialsAgainstForwardAuth(array $credentials) {

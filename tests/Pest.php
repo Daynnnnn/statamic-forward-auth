@@ -71,7 +71,7 @@ function setupHttpAuthService($status) {
         'driver' => 'forward',
     ];
     
-    config(['forward-authentication' => $forwardAuthConfig]);
+    config(['statamic.forward-authentication' => $forwardAuthConfig]);
     config(['auth.providers.users' => $authConfig]);
 
     Http::fake(Http::response($mockRepsonse, 200));

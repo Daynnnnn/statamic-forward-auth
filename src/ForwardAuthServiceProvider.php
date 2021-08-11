@@ -13,8 +13,8 @@ class ForwardAuthServiceProvider extends AddonServiceProvider
         $this->mergeConfigFrom(__DIR__.'/../config/forward-authentication.php', 'statamic.forward-authentication');
 
         $this->app->bind(AuthServices\AuthServiceContract::class, function () {
-            $service = config('forward-authentication.default');
-            $class = $this->lookupType(config("forward-authentication.services.$service.driver"));
+            $service = config('statamic.forward-authentication.default');
+            $class = $this->lookupType(config("statamic.forward-authentication.services.$service.driver"));
             return new $class;
         });
     }
