@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'type' => 'http',
+    'default' => env('STATAMIC_FORWARD_AUTH_SERVICE', 'http'),
 
     /*
     |--------------------------------------------------------------------------
@@ -26,7 +26,11 @@ return [
     */
 
     'services' => [
+
         'http' => [
+
+            'driver' => 'http',
+
             'address' => env('STATAMIC_FORWARD_AUTH_HTTP_ADDRESS'),
     
             'response' => [
@@ -34,8 +38,11 @@ return [
                 'name' => 'data.name',
             ],
         ],
-    
+
         'ldap' => [
+
+            'driver' => 'ldap',
+
             'host' => env('STATAMIC_FORWARD_AUTH_LDAP_HOST'),
             
             'ssl' => env('STATAMIC_FORWARD_AUTH_LDAP_SSL', false),
@@ -46,6 +53,7 @@ return [
     
             'password' => env('STATAMIC_FORWARD_AUTH_BIND_PASSWORD'),
         ],
+
     ],
 
     /*
