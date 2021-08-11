@@ -51,9 +51,10 @@ function setupHttpAuthService($status) {
     ];
 
     $forwardAuthConfig = [
-        'type' => 'http',
+        'default' => 'http',
         'services' => [
             'http' => [
+                'driver' => 'http',
                 'address' => 'http://localhost/login',
                 'response' => [
                     'success' => 'success',
