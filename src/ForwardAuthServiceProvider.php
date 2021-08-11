@@ -21,6 +21,10 @@ class ForwardAuthServiceProvider extends AddonServiceProvider
 
     public function boot()
     {
+        $this->publishes([
+            __DIR__.'/../config/forward-authentication.php' => config_path('statamic/forward-authentication.php'),
+        ], 'statamic-forward-authentication');
+
         Auth::provider('forward', function () {
             return new ForwardAuthUserProvider;
         });
