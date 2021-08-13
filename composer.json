@@ -3,7 +3,11 @@
     "description": "Allows you to use login using forward authentication.",
     "autoload": {
         "psr-4": {
-            "Daynnnnn\\Statamic\\Auth\\ForwardAuth\\": "src",
+            "Daynnnnn\\Statamic\\Auth\\ForwardAuth\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
             "Daynnnnn\\Statamic\\Auth\\ForwardAuth\\Tests\\": "tests"
         }
     },
