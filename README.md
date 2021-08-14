@@ -12,7 +12,7 @@ From a standard Statamic V3 site, you can run:
 `composer require daynnnnn/statamic-forward-auth`
 
 Then publish the config:
-``
+`php please vendor:publish --tag="statamic-forward-authentication"`
 
 # Setup
 
