@@ -43,9 +43,11 @@ return [
 
             'driver' => 'ldap',
 
-            'host' => env('STATAMIC_FORWARD_AUTH_LDAP_HOST'),
+            'hosts' => [
+                env('STATAMIC_FORWARD_AUTH_LDAP_HOST'),
+            ],
             
-            'ssl' => env('STATAMIC_FORWARD_AUTH_LDAP_SSL', false),
+            'use_ssl' => env('STATAMIC_FORWARD_AUTH_LDAP_SSL', false),
     
             'base_dn' => env('STATAMIC_FORWARD_AUTH_BASE_DN'),
     

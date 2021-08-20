@@ -40,15 +40,21 @@ An ldap search will be made of the `base_dn` to find the user. If the user is fo
 
 ### Config
 
-`host: (string)` LDAP Host
+`host: (array)` List of LDAP hsots
 
-`ssl: (bool)` Whether host should be accessed with SSL
+`use_ssl: (bool)` Whether host should be accessed with SSL
 
 `base_dn: (string)` Root search DN to find user in.
 
-`username: (string)` Bind users username.
+`username: (string)` Bind users DN.
 
 `password: (string)` Bind users password.
+
+# Requirements
+
+The LDAP auth service requires Adldap2:
+
+`composer require adldap2/adldap2`
 
 ## HTTP Authentication
 
