@@ -110,6 +110,28 @@ test('login if local password is valid and forward authentication password is va
     $this->assertTrue($userProvider->validateCredentials($user, $credentials));
 });
 
+test('if user is created via forward authentication, does require check against forward auth', function () {
+    $user = User::make()
+        ->email('test+5@gmail.com')
+        ->password('supersecure')
+        ->data([
+            'forward_auth' => true,
+        ])
+        ->save();
+
+    $forwardAuthUser = setupHttpAuthService(false);
+
+    $userProvider = new ForwardAuthUserProvider;
+
+    $credentials = [
+        'email' => 'test+5@gmail.com',
+        'password' => 'supersecure',
+    ];
+
+    // Assert login fails
+    $this->assertFalse($userProvider->validateCredentials($user, $credentials));
+});
+
 test('if user isn\'t created via forward authentication, don\'t require check against forward auth', function () {
     $user = User::make()
         ->email('test+5@gmail.com')
