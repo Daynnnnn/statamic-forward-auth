@@ -60,7 +60,7 @@ class LdapAuthService implements AuthServiceContract
     }
 
     public function credentialsValidAgainstForwardAuth(): bool {
-        return (bool)$this->forwardAuthUser;
+        return $this->forwardAuthUser !== false;
     }
 
     public function userData(): array {
