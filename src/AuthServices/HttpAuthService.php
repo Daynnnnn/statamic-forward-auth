@@ -17,15 +17,15 @@ class HttpAuthService implements AuthServiceContract
         $this->data = config("statamic.forward-authentication.data");
     }
 
-    public function checkCredentialsAgainstForwardAuth(array $credentials) {
+    public function checkCredentialsAgainstForwardAuth(array $credentials): array {
         return $this->forwardAuthUser = Http::post($this->config['address'], $credentials)->json();
     }
 
-    public function credentialsValidAgainstForwardAuth() {
+    public function credentialsValidAgainstForwardAuth(): bool {
         return Arr::get($this->forwardAuthUser, $this->config['response']['success']);
     }
 
-    public function userData() {
+    public function userData(): array {
         return array_merge($this->data, [
             'name' => Arr::get($this->forwardAuthUser, $this->config['response']['name']),
             'forward_auth' => true,

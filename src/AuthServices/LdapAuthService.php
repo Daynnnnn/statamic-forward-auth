@@ -22,7 +22,7 @@ class LdapAuthService implements AuthServiceContract
         $this->data = config("statamic.forward-authentication.data");
     }
 
-    public function checkCredentialsAgainstForwardAuth(array $credentials) {
+    public function checkCredentialsAgainstForwardAuth(array $credentials): array {
         // Create LDAP client
         $ad = new Adldap();
 
@@ -59,11 +59,11 @@ class LdapAuthService implements AuthServiceContract
         }
     }
 
-    public function credentialsValidAgainstForwardAuth() {
+    public function credentialsValidAgainstForwardAuth(): bool {
         return (bool)$this->forwardAuthUser;
     }
 
-    public function userData() {
+    public function userData(): array {
         return array_merge($this->data, [
             'name' => $this->forwardAuthUser->cn[0],
             'forward_auth' => true,
