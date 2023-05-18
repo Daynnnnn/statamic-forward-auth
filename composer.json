@@ -23,12 +23,18 @@
         }
     },
     "require": {
-        "statamic/cms": "^3.0"
+        "statamic/cms": "^3.0 || ^4.0"
     },
     "require-dev": {
-        "phpstan/phpstan": "^0.12.89",
-        "pestphp/pest": "^1.14",
-        "orchestra/testbench": "^6.19",
+        "phpstan/phpstan": "^1.8",
+        "pestphp/pest": "^2.6",
+        "orchestra/testbench": "^8.5",
         "adldap2/adldap2": "^10.3"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "pixelfear/composer-dist-plugin": true
+        }
     }
 }
