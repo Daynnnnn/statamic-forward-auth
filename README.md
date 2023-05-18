@@ -8,7 +8,7 @@ Use forward authentication to login to statamic.
 
 # Installation
 
-From a standard Statamic V3 site, you can run:
+From a standard Statamic site, you can run:
 `composer require daynnnnn/statamic-forward-auth`
 
 Then publish the config:

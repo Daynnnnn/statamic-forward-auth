@@ -3,6 +3,7 @@
 use Daynnnnn\Statamic\Auth\ForwardAuth\ForwardAuthUserProvider;
 use Daynnnnn\Statamic\Auth\ForwardAuth\AuthServices\AuthServiceContract;
 use Daynnnnn\Statamic\Auth\ForwardAuth\AuthServices\HttpAuthService;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Statamic\Auth\File\UserGroupRepository as FileUserGroupRepository;
 use Statamic\Facades\User;
