@@ -22,7 +22,7 @@ class LdapAuthService implements AuthServiceContract
         $this->data = config("statamic.forward-authentication.data");
     }
 
-    public function checkCredentialsAgainstForwardAuth(array $credentials): array {
+    public function checkCredentialsAgainstForwardAuth(array $credentials): array|false {
         $connectionConfig = [
             'hosts' => $this->config['hosts'],
             'port' => $this->config['port'],

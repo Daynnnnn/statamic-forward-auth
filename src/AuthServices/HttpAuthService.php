@@ -17,7 +17,7 @@ class HttpAuthService implements AuthServiceContract
         $this->data = config("statamic.forward-authentication.data");
     }
 
-    public function checkCredentialsAgainstForwardAuth(array $credentials): array {
+    public function checkCredentialsAgainstForwardAuth(array $credentials): array|false {
         return $this->forwardAuthUser = Http::post($this->config['address'], $credentials)->json();
     }
 
