@@ -46,6 +46,8 @@ return [
             'hosts' => [
                 env('STATAMIC_FORWARD_AUTH_LDAP_HOST'),
             ],
+
+            'port' => env('STATAMIC_FORWARD_AUTH_LDAP_PORT', 389),
             
             'use_ssl' => env('STATAMIC_FORWARD_AUTH_LDAP_SSL', false),
     

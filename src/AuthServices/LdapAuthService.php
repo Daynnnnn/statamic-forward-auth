@@ -25,6 +25,7 @@ class LdapAuthService implements AuthServiceContract
     public function checkCredentialsAgainstForwardAuth(array $credentials): array {
         $connectionConfig = [
             'hosts' => $this->config['hosts'],
+            'port' => $this->config['port'],
             'use_ssl' => $this->config['use_ssl'],
             'base_dn' => $this->config['base_dn'],
         ];
