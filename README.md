@@ -52,9 +52,9 @@ An ldap search will be made of the `base_dn` to find the user. If the user is fo
 
 # Requirements
 
-The LDAP auth service requires Adldap2:
+The LDAP auth service requires LdapRecord:
 
-`composer require adldap2/adldap2`
+`composer require directorytree/ldaprecord`
 
 ## HTTP Authentication
 

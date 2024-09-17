@@ -29,7 +29,7 @@
         "phpstan/phpstan": "^1.8",
         "pestphp/pest": "^2.6",
         "orchestra/testbench": "^8.5",
-        "adldap2/adldap2": "^10.3"
+        "directorytree/ldaprecord": "^3.7"
     },
     "config": {
         "allow-plugins": {

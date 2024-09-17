@@ -2,8 +2,8 @@
 
 namespace Daynnnnn\Statamic\Auth\ForwardAuth\AuthServices;
 
-use Adldap\Adldap;
-use Daynnnnn\Statamic\Auth\ForwardAuth\Exceptions\AdldapNotFoundException;
+use LdapRecord\Connection;
+use Daynnnnn\Statamic\Auth\ForwardAuth\Exceptions\LdapRecordNotFoundException;
 use Illuminate\Support\Arr;
 
 class LdapAuthService implements AuthServiceContract
@@ -13,8 +13,8 @@ class LdapAuthService implements AuthServiceContract
     protected $forwardAuthUser = false;
 
     public function __construct() {
-        if (!class_exists(Adldap::class)) {
-            throw new AdldapNotFoundException("Using the LDAP service requires the Adldap2 package", 1);
+        if (!class_exists(Connection::class)) {
+            throw new LdapRecordNotFoundException("Using the LDAP service requires the LdapRecord package", 1);
         }
 
         $service = config('statamic.forward-authentication.default');
@@ -23,33 +23,31 @@ class LdapAuthService implements AuthServiceContract
     }
 
     public function checkCredentialsAgainstForwardAuth(array $credentials): array {
-        // Create LDAP client
-        $ad = new Adldap();
+        $connectionConfig = [
+            'hosts' => $this->config['hosts'],
+            'use_ssl' => $this->config['use_ssl'],
+            'base_dn' => $this->config['base_dn'],
+        ];
 
-        // Add ldap provider based on config
-        $ad->addProvider(Arr::only($this->config, [
-            'hosts',
-            'use_ssl',
-            'base_dn',
-            'username',
-            'password',
-        ]));
-
-        // Connect to LDAP provider using bind user
-        $provider = $ad->connect('default');
+        // Connect as "Root" LDAP user
+        $mainConnection = new Connection([
+            ...$connectionConfig,
+            'username' => $this->config['username'],
+            'password' => $this->config['password'],
+        ]);
 
         // Start try block, as any exceptions past here will be authentication issues,
         // end block with finally for the same reason.
         try {
             // Search for user with user provided email
-            $user = $provider->search()->where('mail', '=', $credentials['email'])->first();
-            
+            $user = $mainConnection->query()->where('mail', '=', $credentials['email'])->first();
+
             // Try connect to the LDAP provider with found users DN and provided password
-            $provider = $ad->connect(
-                'default',
-                $user->distinguishedname['0'],
-                $credentials['password'],
-            );
+            $mainConnection = new Connection([
+                ...$connectionConfig,
+                'username' => $user->distinguishedname['0'],
+                'password' => $credentials['password'],
+            ]);
 
             // Connection will throw an exception if it fails, so if we get to 
             // this step then set the forwardAuthUser to the returned user
