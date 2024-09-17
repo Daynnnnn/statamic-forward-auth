@@ -44,11 +44,13 @@ class LdapAuthService implements AuthServiceContract
             $user = $mainConnection->query()->where('mail', '=', $credentials['email'])->first();
 
             // Try connect to the LDAP provider with found users DN and provided password
-            $mainConnection = new Connection([
+            $userConnection = new Connection([
                 ...$connectionConfig,
                 'username' => $user['dn'],
                 'password' => $credentials['password'],
             ]);
+
+            $userConnection->connect();
 
             // Connection will throw an exception if it fails, so if we get to 
             // this step then set the forwardAuthUser to the returned user
