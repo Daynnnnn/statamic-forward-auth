@@ -46,7 +46,7 @@ class LdapAuthService implements AuthServiceContract
             // Try connect to the LDAP provider with found users DN and provided password
             $mainConnection = new Connection([
                 ...$connectionConfig,
-                'username' => $user->distinguishedname['0'],
+                'username' => $user['dn'],
                 'password' => $credentials['password'],
             ]);
 
@@ -64,7 +64,7 @@ class LdapAuthService implements AuthServiceContract
 
     public function userData(): array {
         return array_merge($this->data, [
-            'name' => $this->forwardAuthUser->cn[0],
+            'name' => $this->forwardAuthUser['displayname'][0],
             'forward_auth' => true,
         ]);
     }
