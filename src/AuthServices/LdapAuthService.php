@@ -37,6 +37,8 @@ class LdapAuthService implements AuthServiceContract
             'password' => $this->config['password'],
         ]);
 
+        $mainConnection->connect();
+
         // Start try block, as any exceptions past here will be authentication issues,
         // end block with finally for the same reason.
         try {
