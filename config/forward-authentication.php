@@ -1,5 +1,7 @@
 <?php
 
+use LdapRecord\Connection;
+
 return [
 
     /*
@@ -57,7 +59,7 @@ return [
     
             'password' => env('STATAMIC_FORWARD_AUTH_BIND_PASSWORD'),
             
-            'queryCallback' => fn ($connection, $credentials) => $connection->query()->where('mail', '=', $credentials['email'])->first(),
+            'queryCallback' => fn (Connection $connection, array $credentials) => $connection->query()->where('mail', '=', $credentials['email'])->first(),
         ],
 
     ],
