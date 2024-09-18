@@ -43,7 +43,7 @@ class LdapAuthService implements AuthServiceContract
         // end block with finally for the same reason.
         try {
             // Search for user with user provided email
-            $user = $mainConnection->query()->where('mail', '=', $credentials['email'])->first();
+            $user = $this->config['queryCallback']($mainConnection, $credentials);
 
             // Try connect to the LDAP provider with found users DN and provided password
             $userConnection = new Connection([
