@@ -1,17 +1,8 @@
 <?php
 
 use Daynnnnn\Statamic\Auth\ForwardAuth\ForwardAuthUserProvider;
-use Daynnnnn\Statamic\Auth\ForwardAuth\AuthServices\AuthServiceContract;
-use Daynnnnn\Statamic\Auth\ForwardAuth\AuthServices\HttpAuthService;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Http;
-use Statamic\Auth\File\UserGroupRepository as FileUserGroupRepository;
 use Statamic\Facades\User;
-use Statamic\Contracts\Auth\UserGroupRepository;
-use Statamic\Contracts\Auth\UserRepository;
-use Statamic\Stache\Stache;
-use Statamic\Stache\Stores\UsersStore;
-use Statamic\Stache\Repositories\UserRepository as StacheUserRepository;
 
 test('creates user if not found locally and is valid against forward authentication', function () {
     $forwardAuthUser = setupHttpAuthService(true);

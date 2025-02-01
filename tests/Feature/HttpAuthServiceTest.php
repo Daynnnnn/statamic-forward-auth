@@ -18,7 +18,7 @@ test('checkCredentialsAgainstForwardAuth returns expected array', function () {
     $this->assertEquals($mockRepsonse, $forwardAuthUser->checkCredentialsAgainstForwardAuth($credentials));
 });
 
-test('credentialsValidAgainstForwardAuth returns true with valid user', function() {
+test('credentialsValidAgainstForwardAuth returns true with valid user', function () {
     $credentials = [
         'email' => 'test@gmail.com',
         'password' => 'supersecure',
@@ -29,7 +29,7 @@ test('credentialsValidAgainstForwardAuth returns true with valid user', function
     $this->assertTrue($forwardAuthUser->credentialsValidAgainstForwardAuth());
 });
 
-test('userData returns expected data array', function() {
+test('userData returns expected data array', function () {
     $expectedData = [
         'super' => true,
         'forward_auth' => true,

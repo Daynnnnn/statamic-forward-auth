@@ -2,7 +2,6 @@
 
 namespace Daynnnnn\Statamic\Auth\ForwardAuth;
 
-use Daynnnnn\Statamic\Auth\ForwardAuth\AuthServices;
 use Illuminate\Support\Facades\Auth;
 use Statamic\Providers\AddonServiceProvider;
 
@@ -15,6 +14,7 @@ class ForwardAuthServiceProvider extends AddonServiceProvider
         $this->app->bind(AuthServices\AuthServiceContract::class, function () {
             $service = config('statamic.forward-authentication.default');
             $class = $this->lookupType(config("statamic.forward-authentication.services.$service.driver"));
+
             return new $class;
         });
     }
@@ -30,7 +30,8 @@ class ForwardAuthServiceProvider extends AddonServiceProvider
         });
     }
 
-    protected function lookupType($type) {
+    protected function lookupType($type)
+    {
         $types = [
             'http' => AuthServices\HttpAuthService::class,
             'ldap' => AuthServices\LdapAuthService::class,

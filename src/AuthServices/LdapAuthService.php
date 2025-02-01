@@ -2,27 +2,30 @@
 
 namespace Daynnnnn\Statamic\Auth\ForwardAuth\AuthServices;
 
-use LdapRecord\Connection;
 use Daynnnnn\Statamic\Auth\ForwardAuth\Exceptions\LdapRecordNotFoundException;
-use Illuminate\Support\Arr;
+use LdapRecord\Connection;
 
 class LdapAuthService implements AuthServiceContract
 {
     protected $config;
+
     protected $data;
+
     protected $forwardAuthUser = false;
 
-    public function __construct() {
-        if (!class_exists(Connection::class)) {
-            throw new LdapRecordNotFoundException("Using the LDAP service requires the LdapRecord package", 1);
+    public function __construct()
+    {
+        if (! class_exists(Connection::class)) {
+            throw new LdapRecordNotFoundException('Using the LDAP service requires the LdapRecord package', 1);
         }
 
         $service = config('statamic.forward-authentication.default');
         $this->config = config("statamic.forward-authentication.services.$service");
-        $this->data = config("statamic.forward-authentication.data");
+        $this->data = config('statamic.forward-authentication.data');
     }
 
-    public function checkCredentialsAgainstForwardAuth(array $credentials): array|false {
+    public function checkCredentialsAgainstForwardAuth(array $credentials): array|false
+    {
         $connectionConfig = [
             'hosts' => $this->config['hosts'],
             'port' => $this->config['port'],
@@ -54,7 +57,7 @@ class LdapAuthService implements AuthServiceContract
 
             $userConnection->connect();
 
-            // Connection will throw an exception if it fails, so if we get to 
+            // Connection will throw an exception if it fails, so if we get to
             // this step then set the forwardAuthUser to the returned user
             $this->forwardAuthUser = $user;
         } finally {
@@ -62,11 +65,13 @@ class LdapAuthService implements AuthServiceContract
         }
     }
 
-    public function credentialsValidAgainstForwardAuth(): bool {
+    public function credentialsValidAgainstForwardAuth(): bool
+    {
         return $this->forwardAuthUser !== false;
     }
 
-    public function userData(): array {
+    public function userData(): array
+    {
         return array_merge($this->data, [
             'name' => $this->forwardAuthUser['displayname'][0],
             'forward_auth' => true,

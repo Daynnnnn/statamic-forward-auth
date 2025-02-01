@@ -29,7 +29,8 @@
         "phpstan/phpstan": "^1.8",
         "pestphp/pest": "^2.6",
         "orchestra/testbench": "^8.5",
-        "directorytree/ldaprecord": "^3.7"
+        "directorytree/ldaprecord": "^3.7",
+        "laravel/pint": "^1.20"
     },
     "config": {
         "allow-plugins": {

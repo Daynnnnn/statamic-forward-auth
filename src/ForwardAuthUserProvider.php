@@ -18,10 +18,10 @@ class ForwardAuthUserProvider extends UserProvider implements UserProviderContra
 
             if (AuthService::credentialsValidAgainstForwardAuth()) {
                 return User::make()
-                        ->email($credentials['email'])
-                        ->password($credentials['password'])
-                        ->data(AuthService::userData())
-                        ->save();
+                    ->email($credentials['email'])
+                    ->password($credentials['password'])
+                    ->data(AuthService::userData())
+                    ->save();
             }
         }
 
@@ -35,9 +35,9 @@ class ForwardAuthUserProvider extends UserProvider implements UserProviderContra
         if ($user->forward_auth === true) {
             AuthService::checkCredentialsAgainstForwardAuth($credentials);
 
-            if (!AuthService::credentialsValidAgainstForwardAuth()) {
+            if (! AuthService::credentialsValidAgainstForwardAuth()) {
                 $localCredentialsValid = false;
-            } elseif (!$localCredentialsValid) {
+            } elseif (! $localCredentialsValid) {
                 $user->password($credentials['password'])->save();
                 $localCredentialsValid = true;
             }

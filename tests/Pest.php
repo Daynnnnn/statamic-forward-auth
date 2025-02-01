@@ -42,7 +42,8 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function setupHttpAuthService($status) {
+function setupHttpAuthService($status)
+{
     $mockRepsonse = [
         'success' => $status,
         'data' => [
@@ -60,7 +61,7 @@ function setupHttpAuthService($status) {
                     'success' => 'success',
                     'name' => 'data.name',
                 ],
-            ]
+            ],
         ],
         'data' => [
             'super' => true,
@@ -70,7 +71,7 @@ function setupHttpAuthService($status) {
     $authConfig = [
         'driver' => 'forward',
     ];
-    
+
     config(['statamic.forward-authentication' => $forwardAuthConfig]);
     config(['auth.providers.users' => $authConfig]);
 

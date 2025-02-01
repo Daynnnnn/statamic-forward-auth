@@ -7,6 +7,6 @@ interface AuthServiceContract
     public function checkCredentialsAgainstForwardAuth(array $credentials): array|false;
 
     public function credentialsValidAgainstForwardAuth(): bool;
-    
+
     public function userData(): array;
 }
