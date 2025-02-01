@@ -11,38 +11,23 @@ use Statamic\Contracts\Auth\UserRepository;
 use Statamic\Facades\Stache;
 use Statamic\Stache\Stores\UsersStore;
 use Statamic\Stache\Repositories\UserRepository as StacheUserRepository;
-
+use Statamic\Facades\UserGroup;
 
 class TestCase extends BaseTestCase
 {
+
+    protected function getPackageProviders($app)
+    {
+        return [
+            \Statamic\Providers\StatamicServiceProvider::class,
+            \Daynnnnn\Statamic\Auth\ForwardAuth\ForwardAuthServiceProvider::class,
+        ];
+    }
+
     protected function setUp(): void
     {
         parent::setUp();
 
-        $time = time();
-
-        config(['filesystems.disks.standard' => [
-            'driver' => 'local',
-            'root' => storage_path('app/'.$time),
-        ]]);
-
-        app()->alias(Stache::class, 'stache');
-        app()['stache'] = app()['stache']->getFacadeRoot()->registerStore((new UsersStore)->directory(storage_path('app/'.$time.'/users')));
-    
-        app()->singleton('stache.indexes', function () {
-            return collect();
-        });
-    
-        app()->singleton(UserRepository::class, function ($app) {
-            return new StacheUserRepository($app['stache']);
-        });
-    
-        app()->singleton(UserGroupRepository::class, function ($app) {
-            return new FileUserGroupRepository;
-        });
-    
-        app()->bind(AuthServiceContract::class, function () {
-            return new HttpAuthService;
-        });
+        config(['statamic.users.repository' => 'file']);
     }
 }
